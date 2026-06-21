@@ -5,6 +5,7 @@ import "./database/db.js";
 import cors from "cors"
 import dotenv from 'dotenv'
 import createUserRoute from './routes/createUserRoute.js'
+import login from './routes/loginRoute.js'
 
 dotenv.config()
 
@@ -15,7 +16,8 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
-app.use('/', createUserRoute)
+app.use('/', createUserRoute);
+app.use('/', login);
 
 const server = createServer(app);
 

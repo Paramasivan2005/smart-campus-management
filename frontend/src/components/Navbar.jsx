@@ -7,6 +7,9 @@ const Navbar = () => {
   const [usersOpen, setUsersOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role;
+
   const closeMobileMenu = () => {
     setMobileMenu(false);
     setUsersOpen(false);
@@ -17,20 +20,16 @@ const Navbar = () => {
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-5">
         <div className="flex justify-around items-center h-16">
-
           {/* LOGO */}
           <Link to="/" onClick={closeMobileMenu}>
             <div className="flex items-center gap-3">
               <img src="/logo.png" alt="logo" className="w-10 h-10" />
-              <h1 className="text-2xl font-bold text-blue-700">
-                Smart Campus
-              </h1>
+              <h1 className="text-2xl font-bold text-blue-700">Smart Campus</h1>
             </div>
           </Link>
 
           {/* DESKTOP MENU */}
           <div className="hidden md:flex items-center gap-8">
-
             {/* USERS */}
             <div className="relative group">
               <button className="flex items-center gap-1 font-medium">
@@ -39,7 +38,6 @@ const Navbar = () => {
 
               <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg w-56 mt-1">
                 <ul className="py-2">
-
                   <Link to="/liabraryseats">
                     <li className="px-4 py-3 hover:bg-gray-100">
                       Library Seats
@@ -47,69 +45,56 @@ const Navbar = () => {
                   </Link>
 
                   <Link to="/classroom">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Classroom
-                    </li>
+                    <li className="px-4 py-3 hover:bg-gray-100">Classroom</li>
                   </Link>
 
                   <Link to="/labs">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Labs
-                    </li>
+                    <li className="px-4 py-3 hover:bg-gray-100">Labs</li>
                   </Link>
 
                   <Link to="/report">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Report
-                    </li>
+                    <li className="px-4 py-3 hover:bg-gray-100">Report</li>
                   </Link>
-
                 </ul>
               </div>
             </div>
 
             {/* ADMIN */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 font-medium">
-                Admin <ChevronDown size={18} />
-              </button>
+            {role === "admin" && (
+              <div className="relative group">
+                <button className="flex items-center gap-1 font-medium">
+                  Admin <ChevronDown size={18} />
+                </button>
 
-              <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg w-64 mt-1">
-                <ul className="py-2">
+                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg w-64 mt-1">
+                  <ul className="py-2">
+                    <Link to="/createuser">
+                      <li className="px-4 py-3 hover:bg-gray-100">
+                        Create User Account
+                      </li>
+                    </Link>
 
-                  <Link to="/createuser">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Create User Account
-                    </li>
-                  </Link>
+                    <Link to="/admin-reports">
+                      <li className="px-4 py-3 hover:bg-gray-100">Reports</li>
+                    </Link>
 
-                  <Link to="/admin-reports">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Reports
-                    </li>
-                  </Link>
+                    <Link to="/analytics">
+                      <li className="px-4 py-3 hover:bg-gray-100">Analytics</li>
+                    </Link>
 
-                  <Link to="/analytics">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Analytics
-                    </li>
-                  </Link>
+                    <Link to="/dashboard">
+                      <li className="px-4 py-3 hover:bg-gray-100">Dashboard</li>
+                    </Link>
 
-                  <Link to="/dashboard">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Dashboard
-                    </li>
-                  </Link>
-
-                  <Link to="/student-details">
-                    <li className="px-4 py-3 hover:bg-gray-100">
-                      Users Details
-                    </li>
-                  </Link>
-
-                </ul>
+                    <Link to="/student-details">
+                      <li className="px-4 py-3 hover:bg-gray-100">
+                        Users Details
+                      </li>
+                    </Link>
+                  </ul>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* LOGIN */}
             <Link to="/login">
@@ -117,7 +102,6 @@ const Navbar = () => {
                 Login
               </button>
             </Link>
-
           </div>
 
           {/* MOBILE BUTTON */}
@@ -133,7 +117,6 @@ const Navbar = () => {
       {/* MOBILE MENU */}
       {mobileMenu && (
         <div className="md:hidden bg-white border-t">
-
           {/* USERS */}
           <button
             onClick={() => setUsersOpen(!usersOpen)}
@@ -144,31 +127,21 @@ const Navbar = () => {
 
           {usersOpen && (
             <div className="bg-gray-50">
-
               <Link to="/liabraryseats" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Library Seats
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Library Seats</p>
               </Link>
 
               <Link to="/classroom" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Classroom
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Classroom</p>
               </Link>
 
               <Link to="/labs" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Labs
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Labs</p>
               </Link>
 
               <Link to="/report" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Report
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Report</p>
               </Link>
-
             </div>
           )}
 
@@ -182,7 +155,6 @@ const Navbar = () => {
 
           {adminOpen && (
             <div className="bg-gray-50">
-
               <Link to="/createuser" onClick={closeMobileMenu}>
                 <p className="px-8 py-2 hover:bg-gray-200">
                   Create User Account
@@ -190,29 +162,20 @@ const Navbar = () => {
               </Link>
 
               <Link to="/admin-reports" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Reports
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Reports</p>
               </Link>
 
               <Link to="/analytics" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Analytics
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Analytics</p>
               </Link>
 
               <Link to="/dashboard" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Dashboard
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Dashboard</p>
               </Link>
 
               <Link to="/student-details" onClick={closeMobileMenu}>
-                <p className="px-8 py-2 hover:bg-gray-200">
-                  Users Details
-                </p>
+                <p className="px-8 py-2 hover:bg-gray-200">Users Details</p>
               </Link>
-
             </div>
           )}
 
