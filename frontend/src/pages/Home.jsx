@@ -4,8 +4,16 @@ import {
   FlaskConical,
   Users,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
+const navigate = useNavigate();
+
+const handleGetStarted = () => {
+  navigate("/login")
+}
+
   return (
     <div>
 
@@ -16,9 +24,11 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-10 items-center">
 
             <div>
+              
               <h1 className="text-5xl font-bold mb-5">
                 Smart Campus
               </h1>
+            
 
               <p className="text-lg text-gray-200 mb-6">
                 IoT powered platform for monitoring
@@ -26,7 +36,7 @@ const Home = () => {
                 in real time.
               </p>
 
-              <button className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold">
+              <button onClick={handleGetStarted} className="cursor-pointer bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold">
                 Get Started
               </button>
             </div>
