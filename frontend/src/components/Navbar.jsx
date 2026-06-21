@@ -7,100 +7,120 @@ const Navbar = () => {
   const [usersOpen, setUsersOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
 
+  const closeMobileMenu = () => {
+    setMobileMenu(false);
+    setUsersOpen(false);
+    setAdminOpen(false);
+  };
+
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-5">
         <div className="flex justify-around items-center h-16">
-          {/* Logo */}
-          <Link to="/">
+
+          {/* LOGO */}
+          <Link to="/" onClick={closeMobileMenu}>
             <div className="flex items-center gap-3">
               <img src="/logo.png" alt="logo" className="w-10 h-10" />
-              <h1 className="text-2xl font-bold text-blue-700">Smart Campus</h1>
+              <h1 className="text-2xl font-bold text-blue-700">
+                Smart Campus
+              </h1>
             </div>
           </Link>
 
-          {/* Desktop Menu */}
+          {/* DESKTOP MENU */}
           <div className="hidden md:flex items-center gap-8">
-            {/* Users Dropdown */}
+
+            {/* USERS */}
             <div className="relative group">
               <button className="flex items-center gap-1 font-medium">
-                Users
-                <ChevronDown size={18} />
+                Users <ChevronDown size={18} />
               </button>
 
               <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg w-56 mt-1">
                 <ul className="py-2">
-                  <Link to="liabraryseats">
-                    <li className="px-4 py-3 hover:bg-gray-100 cursor-pointer">
+
+                  <Link to="/liabraryseats">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Library Seats
                     </li>
                   </Link>
-                  <Link to="classroom">
-                    <li className="px-4 py-3 hover:bg-gray-100 cursor-pointer">
+
+                  <Link to="/classroom">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Classroom
                     </li>
                   </Link>
-                  <Link to="labs">
-                    <li className="px-4 py-3 hover:bg-gray-100 cursor-pointer">
+
+                  <Link to="/labs">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Labs
                     </li>
                   </Link>
-                  <Link to="report">
-                    <li className="px-4 py-3 hover:bg-gray-100 cursor-pointer">
+
+                  <Link to="/report">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Report
                     </li>
                   </Link>
+
                 </ul>
               </div>
             </div>
 
-            {/* Admin Dropdown */}
+            {/* ADMIN */}
             <div className="relative group">
               <button className="flex items-center gap-1 font-medium">
-                Admin
-                <ChevronDown size={18} />
+                Admin <ChevronDown size={18} />
               </button>
 
               <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg w-64 mt-1">
                 <ul className="py-2">
-                  <Link to="createuser">
-                    <li className="cursor-pointer px-4 py-3 hover:bg-gray-100">
+
+                  <Link to="/createuser">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Create User Account
                     </li>
                   </Link>
-                  <Link to="admin-reports">
-                    <li className="cursor-pointer px-4 py-3 hover:bg-gray-100">
+
+                  <Link to="/admin-reports">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Reports
                     </li>
                   </Link>
-                  <Link to="analytics">
-                    <li className="cursor-pointer px-4 py-3 hover:bg-gray-100">
+
+                  <Link to="/analytics">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Analytics
                     </li>
                   </Link>
-                  <Link to="dashboard">
-                    <li className="cursor-pointer px-4 py-3 hover:bg-gray-100">
+
+                  <Link to="/dashboard">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Dashboard
                     </li>
                   </Link>
-                  <Link to="student-details">
-                    <li className="cursor-pointer px-4 py-3 hover:bg-gray-100">
+
+                  <Link to="/student-details">
+                    <li className="px-4 py-3 hover:bg-gray-100">
                       Users Details
                     </li>
                   </Link>
+
                 </ul>
               </div>
             </div>
 
-            {/* Login */}
-            <Link to="login">
-              <button className="cursor-pointer bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
+            {/* LOGIN */}
+            <Link to="/login">
+              <button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">
                 Login
               </button>
             </Link>
+
           </div>
 
-          {/* Mobile Button */}
+          {/* MOBILE BUTTON */}
           <button
             className="md:hidden"
             onClick={() => setMobileMenu(!mobileMenu)}
@@ -110,53 +130,99 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       {mobileMenu && (
         <div className="md:hidden bg-white border-t">
-          {/* Users */}
-          <div>
-            <button
-              onClick={() => setUsersOpen(!usersOpen)}
-              className="w-full flex justify-between px-5 py-3"
-            >
-              Users
-              <ChevronDown size={18} />
-            </button>
 
-            {usersOpen && (
-              <div className="bg-gray-50">
-                <p className="px-8 py-2">Library Seats</p>
-                <p className="px-8 py-2">Classroom</p>
-                <p className="px-8 py-2">Labs</p>
-              </div>
-            )}
-          </div>
+          {/* USERS */}
+          <button
+            onClick={() => setUsersOpen(!usersOpen)}
+            className="w-full flex justify-between px-5 py-3"
+          >
+            Users <ChevronDown size={18} />
+          </button>
 
-          {/* Admin */}
-          <div>
-            <button
-              onClick={() => setAdminOpen(!adminOpen)}
-              className="w-full flex justify-between px-5 py-3"
-            >
-              Admin
-              <ChevronDown size={18} />
-            </button>
+          {usersOpen && (
+            <div className="bg-gray-50">
 
-            {adminOpen && (
-              <div className="bg-gray-50">
-                <p className="px-8 py-2">Create User Account</p>
-                <p className="px-8 py-2">Reports</p>
-                <p className="px-8 py-2">Analytics</p>
-                <p className="px-8 py-2">Dashboard</p>
-                <p className="px-8 py-2">Users Details</p>
-              </div>
-            )}
-          </div>
+              <Link to="/liabraryseats" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Library Seats
+                </p>
+              </Link>
 
+              <Link to="/classroom" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Classroom
+                </p>
+              </Link>
+
+              <Link to="/labs" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Labs
+                </p>
+              </Link>
+
+              <Link to="/report" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Report
+                </p>
+              </Link>
+
+            </div>
+          )}
+
+          {/* ADMIN */}
+          <button
+            onClick={() => setAdminOpen(!adminOpen)}
+            className="w-full flex justify-between px-5 py-3"
+          >
+            Admin <ChevronDown size={18} />
+          </button>
+
+          {adminOpen && (
+            <div className="bg-gray-50">
+
+              <Link to="/createuser" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Create User Account
+                </p>
+              </Link>
+
+              <Link to="/admin-reports" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Reports
+                </p>
+              </Link>
+
+              <Link to="/analytics" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Analytics
+                </p>
+              </Link>
+
+              <Link to="/dashboard" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Dashboard
+                </p>
+              </Link>
+
+              <Link to="/student-details" onClick={closeMobileMenu}>
+                <p className="px-8 py-2 hover:bg-gray-200">
+                  Users Details
+                </p>
+              </Link>
+
+            </div>
+          )}
+
+          {/* LOGIN */}
           <div className="p-5">
-            <button className="w-full bg-blue-600 text-white py-2 rounded-lg">
-              Login
-            </button>
+            <Link to="/login" onClick={closeMobileMenu}>
+              <button className="w-full bg-blue-600 text-white py-2 rounded-lg">
+                Login
+              </button>
+            </Link>
           </div>
         </div>
       )}
