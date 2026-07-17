@@ -1,29 +1,39 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useLoading } from "../contexts/LoadingContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("student");
+  const navigate = useNavigate();
+  const loading = useLoading();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const res = await axios.post("http://localhost:4000/login", {
         email,
         password,
-        role
       });
-      setEmail("")
-      setPassword("")
-      localStorage.setItem('user',JSON.stringify(res.data));
-      toast.success("Login successfull");
+
+      localStorage.setItem("token", res.data.token);
+
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      setEmail("");
+      setPassword("");
+
+      toast.success("Login Successful");
+
+      navigate("/");
       window.location.reload();
-      console.log(res.data);
+
     } catch (error) {
-      toast.error("Login failed");
-      console.log(error)
+      toast.error("Invalid Email or Password");
+      console.log(error);
     }
   };
 
@@ -57,7 +67,7 @@ const LoginPage = () => {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block mb-1 font-medium">Login As</label>
 
             <select
@@ -68,7 +78,7 @@ const LoginPage = () => {
               <option value="student">Student</option>
               <option value="admin">Admin</option>
             </select>
-          </div>
+          </div> */}
 
           <button
             type="submit"
