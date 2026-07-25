@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const ReportPage = () => {
   const [formData, setFormData] = useState({
@@ -15,23 +16,30 @@ const ReportPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const token = localStorage.getItem("token");
 
-    // API Call Here
-    // axios.post("/api/reports", formData);
+      await axios.post(`${import.meta.env.VITE_API_URL}/reports`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    toast.success("Report Submitted Successfully!");
+      toast.success("Report Submitted Successfully!");
 
-    setFormData({
-      title: "",
-      category: "",
-      description: "",
-    });
+      setFormData({
+        title: "",
+        category: "",
+        description: "",
+      });
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to Submit Report");
+    }
   };
-
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center px-4">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-xl">
@@ -40,11 +48,8 @@ const ReportPage = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <div>
-            <label className="block mb-1 font-medium">
-              Complaint Title
-            </label>
+            <label className="block mb-1 font-medium">Complaint Title</label>
             <input
               type="text"
               name="title"
@@ -57,9 +62,7 @@ const ReportPage = () => {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">
-              Category
-            </label>
+            <label className="block mb-1 font-medium">Category</label>
             <select
               name="category"
               value={formData.category}
@@ -77,9 +80,7 @@ const ReportPage = () => {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">
-              Description
-            </label>
+            <label className="block mb-1 font-medium">Description</label>
             <textarea
               rows="5"
               name="description"
@@ -97,7 +98,6 @@ const ReportPage = () => {
           >
             Submit Report
           </button>
-
         </form>
       </div>
     </div>

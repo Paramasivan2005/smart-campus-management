@@ -7,6 +7,8 @@ import dotenv from 'dotenv'
 import createUserRoute from './routes/createUserRoute.js'
 import login from './routes/loginRoute.js'
 import getUser from './routes/getUserRoute.js'
+import report from './routes/reportRoutes.js'
+import pendingReport from "./routes/pendingreportRoute.js"
 
 dotenv.config()
 
@@ -20,6 +22,8 @@ app.use(express.json());
 app.use('/', createUserRoute);
 app.use('/', login);
 app.use('/', getUser)
+app.use('/', report)
+app.use('/', pendingReport)
 
 const server = createServer(app);
 
