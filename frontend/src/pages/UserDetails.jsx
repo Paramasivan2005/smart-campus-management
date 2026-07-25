@@ -1,34 +1,33 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
+import axios from "axios";
 
 const StudentDetails = () => {
-  const [students, setStudents] = useState([
-    {
-      id: 1,
-      name: "Arun",
-      regNo: "21CSE001",
-      dept: "CSE",
-      email: "arun@gmail.com",
-      password: "123456",
-    },
-    {
-      id: 2,
-      name: "Karthik",
-      regNo: "21CSE002",
-      dept: "IT",
-      email: "karthik@gmail.com",
-      password: "abcdef",
-    },
-  ]);
+  const [students, setStudents] = useState([]);
 
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({
     name: "",
-    regNo: "",
-    dept: "",
+    register_number: "",
+    department: "",
     email: "",
     password: "",
   });
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+
+      setStudents(response.data);
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to fetch users");
+    }
+  };
 
   // Start edit
   const handleEdit = (student) => {
@@ -37,33 +36,44 @@ const StudentDetails = () => {
   };
 
   // Save update
-  const handleSave = () => {
-    const updated = students.map((stu) =>
-      stu.id === editId ? editData : stu
-    );
+  const handleSave = async () => {
+    try {
+      await await axios.put(
+        `${import.meta.env.VITE_API_URL}/users/${editId}`,
+        editData,
+      );
 
-    setStudents(updated);
-    setEditId(null);
-    toast.info("Updated User Details");
+      fetchUser();
+
+      setEditId(null);
+
+      toast.success("Updated Successfully");
+    } catch (err) {
+      toast.error("Update Failed");
+    }
   };
 
   // Delete student
-  const handleDelete = (id) => {
-    setStudents(students.filter((stu) => stu.id !== id));
-    toast.warn("User Was Deleted");
+  const handleDelete = async (id) => {
+    try {
+      await await axios.delete(`${import.meta.env.VITE_API_URL}/users/${id}`);
+
+      fetchUser();
+
+      toast.success("User Deleted");
+    } catch (err) {
+      toast.error("Delete Failed");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">
-          Student Management
-        </h1>
+        <h1 className="text-3xl font-bold">Student Management</h1>
 
         <div className="bg-white px-4 py-2 rounded shadow">
-          Total Students:{" "}
-          <span className="font-bold">{students.length}</span>
+          Total Students: <span className="font-bold">{students.length}</span>
         </div>
       </div>
 
@@ -84,7 +94,6 @@ const StudentDetails = () => {
           <tbody>
             {students.map((stu) => (
               <tr key={stu.id} className="border-b">
-
                 {/* NAME */}
                 <td className="p-2">
                   {editId === stu.id ? (
@@ -107,17 +116,17 @@ const StudentDetails = () => {
                 <td>
                   {editId === stu.id ? (
                     <input
-                      value={editData.regNo}
+                      value={editData.register_number}
                       onChange={(e) =>
                         setEditData({
                           ...editData,
-                          regNo: e.target.value,
+                          register_number: e.target.value,
                         })
                       }
                       className="border p-1"
                     />
                   ) : (
-                    stu.regNo
+                    stu.register_number
                   )}
                 </td>
 
@@ -125,17 +134,17 @@ const StudentDetails = () => {
                 <td>
                   {editId === stu.id ? (
                     <input
-                      value={editData.dept}
+                      value={editData.department}
                       onChange={(e) =>
                         setEditData({
                           ...editData,
-                          dept: e.target.value,
+                          department: e.target.value,
                         })
                       }
                       className="border p-1"
                     />
                   ) : (
-                    stu.dept
+                    stu.department
                   )}
                 </td>
 
@@ -177,7 +186,6 @@ const StudentDetails = () => {
 
                 {/* ACTIONS */}
                 <td className="flex gap-2 p-2">
-
                   {editId === stu.id ? (
                     <button
                       onClick={handleSave}
@@ -200,7 +208,6 @@ const StudentDetails = () => {
                   >
                     Delete
                   </button>
-
                 </td>
               </tr>
             ))}

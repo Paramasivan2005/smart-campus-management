@@ -6,6 +6,7 @@ import cors from "cors"
 import dotenv from 'dotenv'
 import createUserRoute from './routes/createUserRoute.js'
 import login from './routes/loginRoute.js'
+import getUser from './routes/getUserRoute.js'
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ app.use(express.json());
 
 app.use('/', createUserRoute);
 app.use('/', login);
+app.use('/', getUser)
 
 const server = createServer(app);
 
