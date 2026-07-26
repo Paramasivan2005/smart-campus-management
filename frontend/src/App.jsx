@@ -20,6 +20,7 @@ import AdminReports from "./pages/AdminReportPage";
 import AnalyticsPage from "./pages/Analytics";
 import AdminDashboard from "./pages/Dashboard";
 import UserDetails from "./pages/UserDetails";
+import AdminRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -30,12 +31,52 @@ const App = () => {
         <Route path="classroom" element={<ClassroomPage />} />
         <Route path="labs" element={<LabsPage />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="createuser" element={<CreateUser />} />
         <Route path="report" element={<ReportPage />} />
-        <Route path="admin-reports" element={<AdminReports />} />
-        <Route path="analytics" element={<AnalyticsPage />} />
-        <Route path="dashboard" element={<AdminDashboard />} />
-        <Route path="student-details" element={<UserDetails />} />
+        {/* Admin Protected Routes */}
+        <Route
+          path="createuser"
+          element={
+            <AdminRoute>
+              <CreateUser />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="admin-reports"
+          element={
+            <AdminRoute>
+              <AdminReports />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="analytics"
+          element={
+            <AdminRoute>
+              <AnalyticsPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="student-details"
+          element={
+            <AdminRoute>
+              <UserDetails />
+            </AdminRoute>
+          }
+        />
       </Route>,
     ),
   );
